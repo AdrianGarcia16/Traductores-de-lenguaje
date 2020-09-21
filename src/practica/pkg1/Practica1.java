@@ -102,26 +102,55 @@ public class Practica1 {
             try {
                     Scanner input = new Scanner(new File("TABOP.txt"));                 //abrir archivo con la ruta especificada 
                     boolean bandera = true;
-                    while (input.hasNextLine() && bandera == true){
+                    while (input.hasNextLine()){
                         String tabopL = input.nextLine();                                 //guardar linea completa del documento                
                         StringTokenizer stT = new StringTokenizer(tabopL, "\t");
                             if(codigo.equals(stT.nextToken())){
                                 System.out.print(codigo);
-                                
+                                int cont = 0, cont2 = 0;
                                 while (stT.hasMoreTokens()) {
                                     String s = (String) stT.nextElement();
                                     if("Operando".equals(s)){
-                                        System.out.print("\t\t\tSI");
+                                        System.out.print("\t\t\tSI\t");
+                                        if(operando == null){
+                                            System.out.println("\nERROR \nNO SE ENCONTRO OPERANDO");
+                                            System.out.println("LINEA" + Nlin);
+                                            System.exit(0);
+                                        }
+                                        cont++;
                                     }
                                     else if("No Operando".equals(s)){
-                                        System.out.print("\t\t\tNO");
+                                        System.out.print("\t\t\tNO\t");
+                                        if(operando != null){
+                                            System.out.println("\nERROR \nSE ENCONTRO OPERANDO");
+                                            System.out.println("LINEA" + Nlin);
+                                            System.exit(0);
+                                        }
+                                        cont++;
                                     }
                                     else{
-                                        System.out.print("\t\t\t "+s+"    ");
+                                        switch (cont) {
+                                            case 3:
+                                                System.out.print("\t\t\t"+s+"    ");
+                                                cont2 = Integer.parseInt(s);
+                                                cont++;
+                                                break;
+                                            case 4:
+                                                cont2= cont2 + Integer.parseInt(s);
+                                                System.out.print("\t\t\t\t"+s+"    ");
+                                                System.out.print("\t\t\t\t"+cont2+"    ");
+                                                break;
+                                            default:
+                                                System.out.print("\t\t "+s+"    ");
+                                                cont++;
+                                                break;
+                                        }
+                                        
                                     }
                                     
                                 }
                                 System.out.println("");
+                                
                                 bandera = false;
                             }
                     }
