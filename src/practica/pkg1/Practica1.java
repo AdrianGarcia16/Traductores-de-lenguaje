@@ -133,6 +133,7 @@ public class Practica1 {
             if(Seg.charAt(0) == ';'){
                 if(Seg.length() > 80){
                     System.out.println("ERROR\n COMENTARIO MUY LARGO");
+                    System.out.println("LINEA" + linea);
                     System.exit(0);
                     return false;
                 }
@@ -140,13 +141,15 @@ public class Practica1 {
             }
             else if(!((Seg.charAt(0) < 65 || Seg.charAt(0) > 90)  && (Seg.charAt(0) <97 || Seg.charAt(0) > 122))){
                 if(Seg.length()>8){
-                    System.out.println("Error");
+                    System.out.println("ERROR\n ETIQUETA MUY LARGA");
+                    System.out.println("LINEA" + linea);
                     System.exit(0);
                     return false;
                 }
                 for(int i = 1; i<Seg.length();i++){
                     if(!((Character.isLetter(Seg.charAt(i))) || (Character.isDigit(Seg.charAt(i))) || (Seg.charAt(i) == 95))){
-                        System.out.println("ERROR");
+                        System.out.println("ERROR\n LA ETIQUETA CONTIENE CARACTERES INVALIDOS");
+                        System.out.println("LINEA" + linea);
                         System.exit(0);
                         return false;
                     }
@@ -154,7 +157,8 @@ public class Practica1 {
                 etiqueta = Seg;
             }
             else{
-                System.out.println("Error");
+                System.out.println("ERROR \n LA ETIQUETA CONTIENE NO CUMPLE CON SUS CARACTERISTICAS");
+                System.out.println("LINEA" + linea);
                 System.exit(0);
                     return false;
             }
@@ -162,14 +166,16 @@ public class Practica1 {
         }
         if(Pseg == 1){
             if(!((Character.isLetter(Seg.charAt(0))) || (Character.isDigit(Seg.charAt(0))))){
-                System.out.println("ERROR");
+                System.out.println("ERROR\n EL CODOP CONTIENE CARACTERES INVALIDOS");
+                System.out.println("LINEA" + linea);
                 System.exit(0);
             }
             
             for(int i = 0;i<Seg.length();i++){
                 if(Seg.charAt(i) != '.'){
                     if(!((Character.isLetter(Seg.charAt(i))) || (Character.isDigit(Seg.charAt(i))))){
-                        System.out.println("ERROR");
+                        System.out.println("ERROR\n EL CODOP CONTIENE CARACTERES INVALIDOS");
+                        System.out.println("LINEA" + linea);
                         System.exit(0);
                     }
                 }
@@ -177,7 +183,8 @@ public class Practica1 {
             }
             
             if(Seg.length() > 5){
-                System.out.println("ERROR");
+                System.out.println("ERROR\n EL CODOP ES MUY LARGO");
+                System.out.println("LINEA" + linea);
                 System.exit(0);
                 return false;
             }
@@ -185,7 +192,8 @@ public class Practica1 {
             for(int i = 1; i<Seg.length();i++){
                 if(Seg.charAt(i) == '.'){
                     if(b == false){
-                        System.out.println("ERROR");
+                        System.out.println("ERROR\n EL CODOP CONTIENE MAS DE UN PUNTO");
+                        System.out.println("LINEA" + linea);
                         System.exit(0);
                         return false;
                     }
@@ -196,7 +204,8 @@ public class Practica1 {
         }
         if(Pseg ==2){
             if("END".equals(codigo)){
-                System.out.println("ERROR Se encontro un operando despues del codigo de CODOP");
+                System.out.println("ERROR SE ENCONTRO UN OPERANDO DESPUES DE CODOP END");
+                System.out.println("LINEA" + linea);
                 
                 System.exit(0);
                 salir = true;
@@ -205,7 +214,8 @@ public class Practica1 {
         }
         if(Pseg>2){
             System.out.println(Seg);
-            System.out.println("ERROR");
+            System.out.println("ERROR\n SE ENCONTRO ALG DESPUES DEL OPERANDO");
+            System.out.println("LINEA" + linea);
             System.exit(0);
         }
         return true;
