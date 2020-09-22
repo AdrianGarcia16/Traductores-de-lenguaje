@@ -166,6 +166,7 @@ public class Practica1 {
                         System.out.println("ERROR");
                         System.out.println("No se encontro el CODOP");
                         System.out.println("LINEA " + Nlin);
+                        System.exit(0);
                     }
                     
                     input.close();                                                      //cerrar archivo
