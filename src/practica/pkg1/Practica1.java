@@ -153,6 +153,14 @@ public class Practica1 {
                                 
                                 bandera = false;
                             }
+                            else if(codigo.equals("END")){
+                                bandera = false;
+                                break;
+                            }
+                            else if(codigo.equals("ORG")){
+                                bandera = false;
+                                break;
+                            }
                     }
                     if(bandera==true ){
                         System.out.println("ERROR");
