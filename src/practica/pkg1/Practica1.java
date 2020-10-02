@@ -128,7 +128,7 @@ public class Practica1 {
                                             System.out.println("LINEA" + Nlin);
                                             System.exit(0);
                                         }
-                                        System.out.print("INHERENTE 1 BYTE");
+                                        //System.out.print("INHERENTE 1 BYTE");
                                         cont++;
                                     }
                                     else{
@@ -226,6 +226,7 @@ public class Practica1 {
     }
     
         public static String busLim(String val1, int nLin, int val, String Rel){
+            try{
             String Seg = val1;
             if(Rel.equals("REL")){
                     if(!((Seg.charAt(0) < 65 || Seg.charAt(0) > 90)  && (Seg.charAt(0) <97 || Seg.charAt(0) > 122))){
@@ -367,14 +368,14 @@ public class Practica1 {
                     float aux = Float.parseFloat(valorF[0]);
                     if(aux<9 && aux>0){
                         if(valorF[1].contains("-") || valorF[1].contains("+")){
-                            String aux2 = valorF[1].replace("+", Rel);
+                            String aux2 = valorF[1].replace("+", "");
                             aux2 = aux2.replace("-", "");
                             if(!aux2.equals("X") &&!aux2.equals("Y") && !aux2.equals("SP") && !aux2.equals("PC")){
-                                System.out.println("ERROR");
+                                System.out.println(valorF[1]);
+                                System.out.println("ERROR43");
                                 System.out.println("LINEA " + nLin);
                                 System.exit(0);
                             }
-                            
                             if(!Character.isDigit(valorF[1].charAt(0))){
                                 if(valorF[1].charAt(0) == '+'){
                                     mod = " Indizado de pre incremento";
@@ -414,13 +415,26 @@ public class Practica1 {
                         mod = ") Indizado de 16 bits,";
                         return  "IDX2";
                     }
+                    else{
+                        System.out.println("ERROR");
+                        System.out.println("LINEA " + nLin);
+                        System.exit(0);
+                    }
                 }
             }
+            System.out.println("ERROR");
+            System.out.println("LINEA " + nLin);
+            System.exit(0);
             return null;
+            }
+            catch(Exception e){
+                return "Inherente";
+            }
     }
     
     public static int busVal(String val, int nLINE){
         boolean salir = false;
+        try{
         for(int i = 0;i<val.length() && salir==false;i++){
             if(val.charAt(i) == ','){
                 break;
@@ -513,10 +527,20 @@ public class Practica1 {
         }
         else{
             String aux[] = val.split(",");
-            
+            try{
             return Integer.parseInt(aux[0]);
+            }
+            catch(Exception e){
+                System.out.println("\nERROR");
+                            System.out.println("Linea "+nLINE);
+                            System.exit(0);
+            }
         }
         return 0;
+        }
+        catch(Exception e){
+            return 0;
+        }
     }
 
     
