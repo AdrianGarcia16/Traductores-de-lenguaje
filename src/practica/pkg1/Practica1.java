@@ -22,6 +22,9 @@ public class Practica1 {
     public static String mod = "";
     public static String rel = "";
     public static void main(String[] args) {
+        automata au = new automata();
+        au.init("");
+        
     /*    System.out.println("Instrucción" +
                             "(CODOP)\t" +
                             "Operando (Sí" +
@@ -37,7 +40,11 @@ public class Practica1 {
                             "Suma total de" +
                             "bytes\t");*/
         Leer();                                                                 //llamamos al metodo leer para analizar el contenido del arvhivo
-        
+        if(au.estado() != 2){
+            System.out.println(au.estado());
+            System.out.println("ERROR DESCONOCIDO");
+            System.exit(0);
+        }
   
     }
     public static void Leer(){                                                  //metodo para leer el archivo
@@ -104,16 +111,45 @@ public class Practica1 {
                     boolean salir = false;
                     while (input.hasNextLine() && salir != true){
                         String tabopL = input.nextLine();                                 //guardar linea completa del documento                
+                        Directivas dr = new  Directivas();
                         StringTokenizer stT = new StringTokenizer(tabopL, "\t");
-                            if(codigo.toUpperCase().equals(stT.nextToken().toUpperCase())){
-                                //System.out.print(codigo);
+                        
+                        automata au = new automata();
+                                    if(dr.direc(codigo, etiqueta, operando, busVal(operando, Nlin), Nlin)){                     //comprobar las directivas 
+                                        if(codigo.equals("ORG")){
+                                           au.inicio("ORG", Nlin, etiqueta, operando, codigo); 
+                                           bandera = false;
+                                          
+                                           break;
+                                        }
+                                        else if(codigo.equals("END")){
+                                           au.inicio("END", Nlin, etiqueta, operando, codigo); 
+                                           bandera = false;
+                                           
+                                           break;
+                                        }
+                                        else if(codigo.equals("EQU")){
+                                           
+                                           au.inicio("EQU", Nlin, etiqueta, operando, codigo); 
+                                           bandera = false;
+                                           
+                                           break;
+                                        }
+                                        au.inicio("DIR", Nlin, etiqueta, operando, codigo);
+                                        bandera = false;
+                                        
+                                        break;
+                                    }
+                                    else if(codigo.toUpperCase().equals(stT.nextToken().toUpperCase())){
                                 int cont = 0, cont2 = 0;
-                                
+                                boolean TM = true;
                                 while (stT.hasMoreTokens()) {
                                     mod = "";
                                     String s = (String) stT.nextElement();
-                                    if("Operando".equals(s)){
+                                    
+                                     if("Operando".equals(s)){
                                         //System.out.print("\t\t\tSI\t");
+                                        
                                         if(operando == null){
                                             System.out.println("\nERROR \nNO SE ENCONTRO OPERANDO");
                                             System.out.println("LINEA" + Nlin);
@@ -123,12 +159,15 @@ public class Practica1 {
                                     }
                                     else if("No Operando".equals(s)){
                                         //System.out.print("\t\t\tNO\t");
+                                        
                                         if(operando != null){
                                             System.out.println("\nERROR \nSE ENCONTRO OPERANDO");
                                             System.out.println("LINEA" + Nlin);
                                             System.exit(0);
                                         }
-                                        //System.out.print("INHERENTE 1 BYTE");
+                                        //au.inicio("CODOP", Nlin, etiqueta, operando, codigo);   
+                                        //System.out.print("INHERENTE 1 BYTE");                             *-+
+                                        
                                         cont++;
                                     }
                                     else{
@@ -155,7 +194,8 @@ public class Practica1 {
                                                             mod1 = ") Relativos de 16 bits ";
                                                         }
                                                     }
-                                                    System.out.println(mod1+s + " BYTES");
+                                                    //System.out.println(mod1+s + " BYTES");
+                                                    au.addmemo(Integer.parseInt(s));
                                                     ban = false;
                                                     salir = true;
                                                 }
@@ -170,19 +210,19 @@ public class Practica1 {
                                                 modo = busLim(operando, Nlin, val, s);
                                                 
                                                 if(modo.equals(s)){
-                                                    System.out.print(etiqueta+"\t\t" +codigo+"\t\t" +operando);
-                                                    System.out.print("\t\t("+s + mod);
+                                                    //System.out.print(etiqueta+"\t\t" +codigo+"\t\t" +operando);
+                                                    //System.out.print("\t\t("+s + mod);
                                                     mod = "";
                                                     ban = true;
-                                                    
+                                                    au.inicio("CODOP", Nlin, etiqueta, operando, codigo);//*-+
                                                     //System.out.println();
                                                 }
                                                 else if(modo.equals("Etq")){
-                                                    System.out.print(etiqueta+"\t\t" +codigo+"\t\t" +operando);
-                                                    System.out.print("\t\t("+s + mod);
+                                                    //System.out.print(etiqueta+"\t\t" +codigo+"\t\t" +operando);
+                                                    //System.out.print("\t\t("+s + mod);
                                                     mod = "";
                                                     ban = true;
-                                                    
+                                                    au.inicio("CODOP", Nlin, etiqueta, operando, codigo);//*-+
                                                 }
                                                 
                                                 
@@ -192,21 +232,25 @@ public class Practica1 {
                                     }
                                     
                                 }
+                                if(TM == false){
+                                    break;
+                                }
                                 bandera = false;
                             }
-                            else if(codigo.equals("END")){
+                            /*else if(codigo.equals("END")){
                                 bandera = false;
                                 break;
                             }
-                            else if(codigo.equals("ORG")){
+                            
+                            /*else if(codigo.equals("ORG")){
                                 System.out.println(etiqueta+"\t\t" +codigo+"\t\t" +operando + "\t\tERROR");
                                 bandera = false;
                                 break;
-                            }
+                            }*/
                     }
                     if(bandera==true ){
                         System.out.println("ERROR");
-                        System.out.println("No se encontro el CODOP");
+                        System.out.println("No se encontro el CODOP12");
                         System.out.println("LINEA " + Nlin);
                         System.exit(0);
                     }
@@ -292,7 +336,7 @@ public class Practica1 {
             }
             if(val1.contains("#")){
                 if(val1.contains(",")){
-                    System.out.println("ERROR");
+                    System.out.println("ERROR12");
                     System.out.println("LINEA "+ nLin);
                     System.exit(0);
                 }
@@ -353,7 +397,7 @@ public class Practica1 {
                             if(valorF[1].charAt(i) != 'P' && valorF[1].charAt(i) != 'p'){
                                 if(valorF[1].charAt(i) != 'S' && valorF[1].charAt(i) != 's'){
                                     if(valorF[1].charAt(i) != 'C' && valorF[1].charAt(i) != 'c'){
-                                        System.out.println("ERROR");
+                                        System.out.println("ERROR12");
                                         System.out.println("LINEA " + nLin);
                                         System.exit(0);
                                     }
@@ -574,7 +618,7 @@ public class Practica1 {
                 etiqueta = Seg.toUpperCase();
             }
             else{
-                System.out.println("ERROR \n LA ETIQUETA CONTIENE NO CUMPLE CON SUS CARACTERISTICAS");
+                System.out.println("ERROR");
                 System.out.println("LINEA " + linea);
                 System.exit(0);
                     return false;
@@ -582,6 +626,14 @@ public class Practica1 {
             
         }
         if(Pseg == 1){
+            
+            Directivas dr = new  Directivas();
+            
+            if(dr.direc1(Seg, etiqueta, operando, busVal(operando, linea), linea)){                     //comprobar las directivas 
+                codigo=Seg;
+                return true;
+            }
+            
             if(!((Character.isLetter(Seg.charAt(0))) || (Character.isDigit(Seg.charAt(0))))){
                 System.out.println("ERROR\n EL CODOP CONTIENE CARACTERES INVALIDOS");
                 System.out.println("LINEA " + linea);
@@ -631,7 +683,7 @@ public class Practica1 {
         }
         if(Pseg>2){
             System.out.println(Seg);
-            System.out.println("ERROR\n SE ENCONTRO ALG DESPUES DEL OPERANDO");
+            System.out.println("ERROR\n SE ENCONTRO ALGO DESPUES DEL OPERANDO");
             System.out.println("LINEA " + linea);
             System.exit(0);
         }
