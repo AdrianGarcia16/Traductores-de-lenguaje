@@ -15,9 +15,9 @@ public class automata {
     public static int cont = 0;
     public static String pila[] = new String[10];
     public static int contPila = 0;
-    public static String[] contenido = new String[100];
-    public static String[] tabsin = new String[100];
-    public static String[] ETQ = new String[100];
+    public static String[] contenido = new String[256];
+    public static String[] tabsin = new String[256];
+    public static String[] ETQ = new String[256];
     public static int auxETQ = 0;
     public static int contTab = 0;
     public static int contCon;
@@ -113,7 +113,7 @@ public class automata {
                     case "CODOP":
                         if(pila[contPila].equals("ORG") || pila[contPila].equals("F")){
                             contCon++;
-                            contenido[contCon] = "CONTLOC  \t"+ memo +"\t" + etq +"\t" + codigo +"\t"+operando +"\n";
+                            contenido[contCon] = "CONTLOC\t"+ memo +"\t" + etq +"\t" + codigo +"\t"+operando +"\n";
                             pila[contPila] = "F";
                         }
                         break;
@@ -121,7 +121,7 @@ public class automata {
                         if(pila[contPila].equals("ORG") || pila[contPila].equals("F")){
                             
                             contCon++;
-                            contenido[contCon] = "CONTLOC  \t"+ memoA +"\t" + etq +"\t" + codigo +"\t"+operando +"\n";
+                            contenido[contCon] = "CONTLOC\t"+ memoA +"\t" + etq +"\t" + codigo +"\t"+operando +"\n";
                             
                             pila[contPila] = "F";
                         }
@@ -134,13 +134,19 @@ public class automata {
 
                         }
                         break;
+                    case "CODOPE":
+                        //if(pila[contPila].equals("ORG") || pila[contPila].equals("F")){
+                          //  contTab++;
+                            //tabsin[contTab] = "CONTLOC(ETIQUETA_RELATIVA)\t" + etq+ "\t" + memo+"\n";
+                        //}
+                        break;
                     case "END":
                         
                         if(pila[contPila].equals("ORG") || pila[contPila].equals("F")){
                             cont++;
                             
                             contCon++;
-                            contenido[contCon] = "CONTLOC  \t"+ memo +"\t" + etq +"\t" + codigo +"\t" +operando +"\n";
+                            contenido[contCon] = "CONTLOC\t"+ memo +"\t" + etq +"\t" + codigo +"\t" +operando +"\n";
                             
                             cargarDatos();
                         }
@@ -166,7 +172,7 @@ public class automata {
             }
             if(s.equals("EQU")){
                 contTab++;
-                tabsin[contTab] = "EQU(ETIQUETA_ABSOLUTA)\t\t" + etq+ "\t" +EquVal +"\n";
+                tabsin[contTab] = "EQU(ETIQUETA_ABSOLUTA)\t" + etq+ "\t" +EquVal +"\n";
             }
             else{
                 contTab++;
@@ -183,24 +189,24 @@ public class automata {
         File file = new File("TEMPORAL.txt");
         File file2 = new File("TABSIM.txt");
         try {
-            contenido[0] = "\t\tVALOR\tETQ\tCODOP\tOPERANDO\n";
+            //contenido[0] = "\t\tVALOR\tETQ\tCODOP\tOPERANDO\n";
             if (!file.exists()) {
                 file.createNewFile();
             }
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
-            for(int i = 0;i<contCon+1;i++){
+            for(int i = 1;i<contCon+1;i++){
                 bw.write(contenido[i]);
             }
             bw.close();
             
-            tabsin[0]= "\t\t\tETIQUETA\tVALOR\n";
+            //tabsin[0]= "\t\t\tETIQUETA\tVALOR\n";
             if (!file2.exists()) {
                 file2.createNewFile();
             }
             FileWriter fw2 = new FileWriter(file2);
             BufferedWriter bw2 = new BufferedWriter(fw2);
-            for(int i = 0;i<contTab+1;i++){
+            for(int i = 1;i<contTab+1;i++){
                 bw2.write(tabsin[i]);
             }
             bw2.close();

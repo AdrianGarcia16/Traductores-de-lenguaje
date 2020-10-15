@@ -1,4 +1,4 @@
-ABA	No Operando	Inherente 	1806	0	2
+ABA	No Operando	Inherente	1806	0	2
 ADCA	Operando	Inmediato	89	1	2
 adca	Operando	Directo	99	1	2
 adca	Operando	Extendido	B9	2	3
@@ -59,7 +59,7 @@ BCC	Operando	REL	24	1	2
 BCS	Operando	REL	25	1	2
 BEQ	Operando	REL	27	1	2
 BGE	Operando	REL	2C	1	2
-BGND	No Operando	Inherente 	0	0	1
+BGND	No Operando	Inherente	0	0	1
 BGT	Operando	REL	2E	1	2
 BHI	Operando	REL	22	1	2
 BHS	Operando	REL	24	1	2

@@ -45,7 +45,8 @@ public class Practica1 {
             System.out.println("ERROR DESCONOCIDO");
             System.exit(0);
         }
-  
+        LeerTemp lt = new LeerTemp();
+        lt.LeerX();
     }
     public static void Leer(){                                                  //metodo para leer el archivo
         try {
@@ -65,7 +66,6 @@ public class Practica1 {
 
     
     public static void separar(String line, int Nlin){
-        
         StringTokenizer st = new StringTokenizer(line, "\t");
         int Pseg=0;
         if(line.equals("")){
@@ -206,26 +206,19 @@ public class Practica1 {
                                                 //
                                                 cont++;
                                                 String modo = null;
-                                                int val = busVal(operando, Nlin);
+                                                int val = -1;
+                                                val = busVal(operando, Nlin);
                                                 modo = busLim(operando, Nlin, val, s);
-                                                
-                                                if(modo.equals(s)){
-                                                    //System.out.print(etiqueta+"\t\t" +codigo+"\t\t" +operando);
-                                                    //System.out.print("\t\t("+s + mod);
-                                                    mod = "";
+                                                if(modo.equals(s)){mod = "";
                                                     ban = true;
-                                                    au.inicio("CODOP", Nlin, etiqueta, operando, codigo);//*-+
-                                                    //System.out.println();
+                                                    au.inicio("CODOP", Nlin, etiqueta, operando, codigo);
                                                 }
                                                 else if(modo.equals("Etq")){
-                                                    //System.out.print(etiqueta+"\t\t" +codigo+"\t\t" +operando);
-                                                    //System.out.print("\t\t("+s + mod);
                                                     mod = "";
                                                     ban = true;
+                                                    
                                                     au.inicio("CODOP", Nlin, etiqueta, operando, codigo);//*-+
                                                 }
-                                                
-                                                
                                                 break;
                                         }
                                         
@@ -270,9 +263,13 @@ public class Practica1 {
     }
     
         public static String busLim(String val1, int nLin, int val, String Rel){
+            
             try{
+                if("null".equals(val1)){
+                    return "Inherente";
+                }
             String Seg = val1;
-            if(Rel.equals("REL")){
+            if(Rel.equals("REL") && val1 != null){
                     if(!((Seg.charAt(0) < 65 || Seg.charAt(0) > 90)  && (Seg.charAt(0) <97 || Seg.charAt(0) > 122))){
                         if(Seg.length()>8){
                             System.out.println("ERROR\n ETIQUETA MUY LARGA");
@@ -291,13 +288,14 @@ public class Practica1 {
                         return "REL";
                     }
                     else{
-                        System.out.println("ERROR \n LA ETIQUETA CONTIENE NO CUMPLE CON SUS CARACTERISTICAS");
+                        System.out.println("ERROR \nLA ETIQUETA CONTIENE NO CUMPLE CON SUS CARACTERISTICAS");
                         System.out.println("LINEA " + nLin);
                         System.exit(0);
                     }
             }
             else if(Rel.equals("Extendido")){
                 if(Character.isLetter(val1.charAt(0))){
+                    
                     if(!val1.contains(",")){
                         
                         if(!((Seg.charAt(0) < 65 || Seg.charAt(0) > 90)  && (Seg.charAt(0) <97 || Seg.charAt(0) > 122))){
@@ -314,6 +312,7 @@ public class Practica1 {
 
                                 }
                             }
+                            
                             return "Etq";
                         }
                         else{
@@ -367,15 +366,22 @@ public class Practica1 {
                 boolean ban = false;
                 for(int i = 0;i<val1.length();i++){
                     if(!Character.isDigit(val1.charAt(i)) && val1.charAt(i) != '%' && val1.charAt(i) != '$' && val1.charAt(i) != '@'){
-                        ban = true;
+                        if(!Character.isLetter(val1.charAt(i))){
+                            ban = true;
+                        }
                     }
                 }
                 if(ban != true){
-                    if(val > -1 && val < 256){
-                        return "Directo";
-                    }
-                    else if(val > 255 && val < 65536){
-                        return "Extendido";
+                    if(!Character.isLetter(val1.charAt(0))){
+                        //System.out.println(val1);
+                        if(val > -1 && val < 256){
+                            return "Directo";
+                        }
+                        else if(val > 255 && val < 65536){
+                            return "Extendido";
+                        }
+                    }else{
+                        return "";
                     }
                 }
                 else{
@@ -530,6 +536,7 @@ public class Practica1 {
                         if(cadena[1].charAt(i) < 65 || cadena[1].charAt(i) > 70){
                             System.out.println("\nERROR CARACTER INVALIDO EN EL SISTEMA NUMERICO");
                             System.out.println("Linea "+nLINE);
+                            System.out.println(cadena[1].charAt(i));
                             System.exit(0);
                         }
                     }
@@ -568,16 +575,17 @@ public class Practica1 {
                 }
                 
             }
+            
         }
         else{
             String aux[] = val.split(",");
             try{
-            return Integer.parseInt(aux[0]);
+                return Integer.parseInt(aux[0]);
             }
             catch(Exception e){
                 System.out.println("\nERROR");
-                            System.out.println("Linea "+nLINE);
-                            System.exit(0);
+                System.out.println("Linea "+nLINE);
+                System.exit(0);
             }
         }
         return 0;
