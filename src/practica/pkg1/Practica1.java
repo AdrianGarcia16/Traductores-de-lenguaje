@@ -46,6 +46,7 @@ public class Practica1 {
             System.exit(0);
         }
         LeerTemp lt = new LeerTemp();
+        //System.out.println("NOOO");
         lt.LeerX();
     }
     public static void Leer(){                                                  //metodo para leer el archivo
@@ -335,7 +336,7 @@ public class Practica1 {
             }
             if(val1.contains("#")){
                 if(val1.contains(",")){
-                    System.out.println("ERROR12");
+                    System.out.println("ERROR NO DEBE DE CONTENER # Y UNA ,");
                     System.out.println("LINEA "+ nLin);
                     System.exit(0);
                 }
@@ -403,7 +404,7 @@ public class Practica1 {
                             if(valorF[1].charAt(i) != 'P' && valorF[1].charAt(i) != 'p'){
                                 if(valorF[1].charAt(i) != 'S' && valorF[1].charAt(i) != 's'){
                                     if(valorF[1].charAt(i) != 'C' && valorF[1].charAt(i) != 'c'){
-                                        System.out.println("ERROR12");
+                                        System.out.println("ERROR FORMA INCORRECTA");
                                         System.out.println("LINEA " + nLin);
                                         System.exit(0);
                                     }
@@ -422,7 +423,7 @@ public class Practica1 {
                             aux2 = aux2.replace("-", "");
                             if(!aux2.equals("X") &&!aux2.equals("Y") && !aux2.equals("SP") && !aux2.equals("PC")){
                                 System.out.println(valorF[1]);
-                                System.out.println("ERROR43");
+                                System.out.println("ERROR FORMA INCORRECTA");
                                 System.out.println("LINEA " + nLin);
                                 System.exit(0);
                             }
@@ -466,13 +467,13 @@ public class Practica1 {
                         return  "IDX2";
                     }
                     else{
-                        System.out.println("ERROR");
+                        System.out.println("ERROR FORMA INCORRECTA");
                         System.out.println("LINEA " + nLin);
                         System.exit(0);
                     }
                 }
             }
-            System.out.println("ERROR");
+            System.out.println("ERROR FORMA INCORRECTA");
             System.out.println("LINEA " + nLin);
             System.exit(0);
             return null;
@@ -483,13 +484,19 @@ public class Practica1 {
     }
     
     public static int busVal(String val, int nLINE){
+        if(val!= null){
+            if(val.charAt(0) == ','){
+                val="0,";
+            }
+        }
+        
         boolean salir = false;
         try{
         for(int i = 0;i<val.length() && salir==false;i++){
             if(val.charAt(i) == ','){
                 break;
             }
-            if(!Character.isDigit(val.charAt(i))){
+            if(!Character.isDigit(val.charAt(i)) || val.charAt(i)=='-' || val.charAt(i)=='+'){
                 salir=true;
             }
         }
@@ -565,7 +572,7 @@ public class Practica1 {
                 Sp[0] = Sp[0].toUpperCase();
                 if(Sp[0].charAt(0) != 'D' && Sp[0].charAt(0) != 'B' && Sp[0].charAt(0) != 'A' || (Sp[0].length() >1)){
                     for(int i = 0;i<Sp[0].length();i++){
-                        if(!Character.isDigit(Sp[0].charAt(i))){
+                        if(!Character.isDigit(Sp[0].charAt(i)) && Sp[0].charAt(i) != '-'){
                             System.out.println("\nERROR CARACTER INVALIDO EN EL SISTEMA NUMERICO");
                             System.out.println("Linea "+nLINE);
                             System.exit(0);
@@ -583,7 +590,7 @@ public class Practica1 {
                 return Integer.parseInt(aux[0]);
             }
             catch(Exception e){
-                System.out.println("\nERROR");
+                System.out.println("\nERROR FORMA INCORRECTA");
                 System.out.println("Linea "+nLINE);
                 System.exit(0);
             }

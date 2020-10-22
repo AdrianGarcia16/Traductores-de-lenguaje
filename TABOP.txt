@@ -193,11 +193,11 @@ LBVS	Operando	REL	1829	2	4
 LDAA	Operando	Inmediato	86	1	2
 ldaa	Operando	Directo	96	1	2
 ldaa	Operando	Extendido	B6	2	3
-idaa	Operando	IDX	A6	1	2
-idaa	Operando	IDX1	A6	2	3
-idaa	Operando	IDX2	A6	3	4
-idaa	Operando	[D,IDX]	A6	1	2
-idaa	Operando	[IDX2]	A6	3	4
+ldaa	Operando	IDX	A6	1	2
+ldaa	Operando	IDX1	A6	2	3
+ldaa	Operando	IDX2	A6	3	4
+ldaa	Operando	[D,IDX]	A6	1	2
+ldaa	Operando	[IDX2]	A6	3	4
 LDAB	Operando	Inmediato	C6	1	2
 ldab	Operando	Directo	D6	1	2
 ldab	Operando	Extendido	F6	2	3

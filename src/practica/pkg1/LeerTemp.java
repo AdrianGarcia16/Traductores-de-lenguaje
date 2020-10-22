@@ -147,7 +147,6 @@ public class LeerTemp {
                                         case "Inherente":
                                             aux = (String) stT.nextElement();
                                             String s2 = aux;
-                                            
                                             CodigoM.add(p, s2);
                                             break;
                                         case "Extendido":
@@ -163,7 +162,85 @@ public class LeerTemp {
                                             s3=s3.toUpperCase();
                                             CodigoM.add(p, s3);
                                             break;
-                                        default:
+                                        case "IDX":
+                                            String[] E = operando.get(p).split(",");
+                                            
+                                            aux = (String) stT.nextElement();
+                                            if(E[1].contains("-") || E[1].contains("+")){
+                                                CodigoM.add(p, aux+PrePost(operando.get(p)).toUpperCase());
+                                                break;
+                                            }
+                                            if(E[0].equals("A") || E[0].equals("B") || E[0].equals("D")){
+                                                 CodigoM.add(p, aux + Integer.toHexString(Integer.parseInt("111"+CalcularRR(operando.get(p))+"1"+CalcularRR(","+E[0]), 2)).toUpperCase());
+                                            }
+                                            else{
+                                                String registro = operando.get(p);
+                                                String calN =Integer.toBinaryString(val);
+                                                for(int i = 0;i<6;i++){
+                                                    if(calN.length() < 6){
+                                                        calN = "0" + calN ;
+                                                    }
+                                                }
+                                                String[] y = operando.get(p).split(",");
+                                                float valF = 1;
+                                                if(operando.get(p).charAt(0) != ','){
+                                                    valF =Float.parseFloat(y[0]);
+                                                }
+                                                if(valF<0){
+                                                    String z = Integer.toBinaryString((int)valF *-1);
+                                                    for(int i = 0;i<5;i++){
+                                                        if(z.length() < 5){
+                                                            z = "0" +z;
+                                                        }
+                                                    }
+                                                    calN = C2(z, 4);
+                                                }
+                                                String Formula = CalcularRR(registro) + "0" + calN;
+                                                int FormulaH = Integer.parseInt(Formula, 2);
+                                                String aux2 = (Integer.toHexString(FormulaH));
+                                                for(int i = 0;i<3;i++){
+                                                    if(aux2.length() < 2){
+                                                        aux2 = "0" + aux2 ;
+                                                    }
+                                                }
+                                                aux = aux + aux2;
+                                                String s5 = aux;
+                                                for(int i = 0;i<4;i++){
+                                                    if(s5.length() < 4){
+                                                        s5 = s5 + "0";
+                                                    }
+                                                }
+                                                s5=s5.toUpperCase();
+                                                CodigoM.add(p, s5);
+                                            }
+                                            
+                                            break;
+                                        case "IDX1":
+                                            String[] registro1 = operando.get(p).split(",");
+                                            String aux1="00", aus1a = Integer.toHexString(Integer.parseInt(registro1[0]));
+                                            if(Integer.parseInt(registro1[0])<0){
+                                                aux1="01";
+                                                String c2 = Integer.toBinaryString(Integer.parseInt(registro1[0])*-1);
+                                                for(int i = 0;i<9;i++){
+                                                    if(c2.length() < 9){
+                                                        c2 ="0"+ c2 ;
+                                                    }
+                                                }
+                                                String h=C2(c2,8);
+                                                aus1a = Integer.toHexString(Integer.parseInt(h, 2));
+                                                aus1a = String.valueOf(aus1a.charAt(1)) + String.valueOf(aus1a.charAt(2));
+                                            }
+                                            aux1= "111"+CalcularRR(operando.get(p))+"0"+aux1;
+                                            String aux3;
+                                            aux1=Integer.toHexString(Integer.parseInt(aux1, 2));
+                                            aux1=(String) stT.nextElement() + aux1 + aus1a;
+                                            CodigoM.add(p, aux1.toUpperCase());
+                                            break;
+                                        case "IDX2":
+                                            aux = (String) stT.nextElement();
+                                            String[] g = operando.get(p).split(",");
+                                            aux = aux + String.valueOf(Integer.toHexString(Integer.parseInt("111"+CalcularRR(operando.get(p))+"010",2))) + Integer.toHexString(Integer.parseInt(g[0]));
+                                            CodigoM.add(p, aux.toUpperCase());
                                             break;
                                     }
                                 }
@@ -194,6 +271,126 @@ public class LeerTemp {
             ex.printStackTrace();
         }
     }
+    public static String PrePost(String s){
+        String[] g = s.split(",");
+        
+        if(g[1].charAt(0) == '+'){                                              //pre incremento
+            String aux = g[1].replace("+", "");
+            String h = Integer.toBinaryString(Integer.parseInt(g[0])-1);
+            
+            for(int i = 0;i<4;i++){
+                if(h.length() < 4){
+                    h ="0"+ h;
+                }
+            }
+            
+            String fin=CalcularRR(","+aux)+"10"+h;
+            System.out.println(fin);
+            return Integer.toHexString(Integer.parseInt(fin, 2));
+        }
+        else if(g[1].charAt(0) == '-'){                                         //pre decremento
+            String aux = g[1].replace("-", "");
+            
+            String h = Integer.toBinaryString(Integer.parseInt(g[0]));
+            
+            for(int i = 0;i<4;i++){
+                if(h.length() < 4){
+                    h ="0"+ h;
+                }
+            }
+            
+            String fin=CalcularRR(","+aux)+"10"+C2(h, 3);
+            System.out.println(fin);
+            return Integer.toHexString(Integer.parseInt(fin, 2));
+        }
+        else if(g[1].charAt(g[1].length()-1) == '+'){                           //post incremento
+            String aux = g[1].replace("+", "");
+            String h = Integer.toBinaryString(Integer.parseInt(g[0])-1);
+            
+            for(int i = 0;i<4;i++){
+                if(h.length() < 4){
+                    h ="0"+ h;
+                }
+            }
+            String fin=CalcularRR(","+aux)+"11"+h;
+            if(CalcularRR(","+aux).equals("11")){
+                System.out.println("SE ENCONTRO UN PC EN POST-INC");
+                System.exit(0);
+            }
+            return Integer.toHexString(Integer.parseInt(fin, 2));
+        }
+        else if(g[1].charAt(g[1].length()-1) == '-'){                           //post decremento
+            String aux = g[1].replace("-", "");
+            
+            String h = Integer.toBinaryString(Integer.parseInt(g[0]));
+            
+            for(int i = 0;i<4;i++){
+                if(h.length() < 4){
+                    h ="0"+ h;
+                }
+            }
+            
+            String fin=CalcularRR(","+aux)+"11"+C2(h, 3);
+            System.out.println(fin);
+            return Integer.toHexString(Integer.parseInt(fin, 2));
+        }
+        else{
+            System.out.println("ERROR DESCONOCIDO");
+            System.exit(0);
+        }
+        return"";
+    }
+    
+    public static String C2(String val, int c){
+        String aux="";
+        boolean ban= false;
+        for(int i = c;i>-1;i--){
+            if(ban == true){
+                if(val.charAt(i) == '1'){
+                    aux="0"+aux;
+                }
+                else{
+                    aux="1"+aux;
+                }
+            }
+            else{
+                if(val.charAt(i) == '1'){
+                    aux="1"+aux;
+                    ban = true;
+                }
+                else{
+                    aux="0"+aux;
+                }
+            }
+        }
+        return aux;
+    }
+    
+    public static String CalcularRR(String s){
+        String[] s1 = s.split(",");
+        s = s1[1];
+        switch(s){
+            case "X":
+                return "00";
+            case "Y":
+                return "01";
+            case "SP":
+                return "10";
+            case "PC":
+                return "11";
+            case "A":
+                return "00";
+            case "B":
+                return "01";
+            case "D":
+                return "10";
+            default:
+                System.out.println(s);
+                System.out.println("ERROR NO SE ENCONTRO X, Y, SP, O PC");
+        }
+        return "";
+    }
+    
      public static String agregarValorEtq(String S){
         try {
             Scanner input = new Scanner(new File("TABSIM.txt"));                 //abrir archivo con la ruta especificada (la ruta es)
