@@ -21,7 +21,7 @@ public class automata {
     public static int auxETQ = 0;
     public static int contTab = 0;
     public static int contCon;
-    public static String memo;
+    public static String memo ="";
     public static String memoA;
     public static String EquVal;
     public int estado(){
@@ -119,10 +119,8 @@ public class automata {
                         break;
                     case "DIR":
                         if(pila[contPila].equals("ORG") || pila[contPila].equals("F")){
-                            
                             contCon++;
                             contenido[contCon] = "CONTLOC\t"+ memoA +"\t" + etq +"\t" + codigo +"\t"+operando +"\n";
-                            
                             pila[contPila] = "F";
                         }
                         break;
@@ -174,10 +172,13 @@ public class automata {
                 contTab++;
                 tabsin[contTab] = "EQU(ETIQUETA_ABSOLUTA)\t" + etq+ "\t" +EquVal +"\n";
             }
+            else if(s.equals("DIR")){
+                contTab++;
+                tabsin[contTab] = "CONTLOC(ETIQUETA_RELATIVA)\t" + etq+ "\t" +memoA+"\n";
+            }
             else{
                 contTab++;
-                tabsin[contTab] = "CONTLOC(ETIQUETA_RELATIVA)\t" + etq+ "\t" + memo+"\n";
-                
+                tabsin[contTab] = "CONTLOC(ETIQUETA_RELATIVA)\t" + etq+ "\t" +memo+"\n";
             }
             ETQ[auxETQ] = etq;
             auxETQ++;

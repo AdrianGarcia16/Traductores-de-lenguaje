@@ -16,7 +16,7 @@ public class Directivas {
             case "DW":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -24,7 +24,7 @@ public class Directivas {
             case "DB":
                 if(val <0 || val >255 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -32,7 +32,7 @@ public class Directivas {
             case "DC.W":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -40,7 +40,7 @@ public class Directivas {
             case "DC.B":
                 if(val <0 || val >255 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -48,7 +48,7 @@ public class Directivas {
             case "FCB":
                 if(val <0 || val >255 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -56,7 +56,7 @@ public class Directivas {
             case "FDB":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -66,7 +66,7 @@ public class Directivas {
             case "ORG":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -76,7 +76,7 @@ public class Directivas {
             case "DS":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -84,7 +84,7 @@ public class Directivas {
             case "DS.B":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -92,7 +92,7 @@ public class Directivas {
             case "DS.W":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -100,7 +100,7 @@ public class Directivas {
             case "RMB":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -108,7 +108,7 @@ public class Directivas {
             case "RMW":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }   
@@ -116,7 +116,7 @@ public class Directivas {
             case "EQU":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -126,13 +126,144 @@ public class Directivas {
         return false;
     }
     
+    public String direcVal(String DIR, int val){
+        String Nlin ="";
+        switch(DIR){
+            case "DW":
+                if(val <0 || val >65535 ){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                String s1 = Integer.toHexString(val);
+                for(int i = 0;i<4;i++){
+                    if(s1.length() < 4){
+                            s1 = "0" + s1;
+                    }
+                }
+                return s1;
+            case "DB":
+                if(val <0 || val >255 ){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                String s2 = Integer.toHexString(val);
+                for(int i = 0;i<2;i++){
+                    if(s2.length() < 2){
+                            s2 = "0" + s2;
+                    }
+                }
+                return s2;
+            case "DC.W":
+                if(val <0 || val >65535 ){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                String s3 = Integer.toHexString(val);
+                for(int i = 0;i<4;i++){
+                    if(s3.length() < 4){
+                            s3 = "0" + s3;
+                    }
+                }
+                return s3;
+            case "DC.B":
+                if(val <0 || val >255 ){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                String s5 = Integer.toHexString(val);
+                for(int i = 0;i<2;i++){
+                    if(s5.length() < 2){
+                            s5 = "0" + s5;
+                    }
+                }
+                return s5;
+            case "FCB":
+                if(val <0 || val >255 ){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                String s6 = Integer.toHexString(val);
+                for(int i = 0;i<2;i++){
+                    if(s6.length() < 2){
+                            s6 = "0" + s6;
+                    }
+                }
+                return s6;
+            case "FDB":
+                if(val <0 || val >65535 ){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                String s7 = Integer.toHexString(val);
+                for(int i = 0;i<4;i++){
+                    if(s7.length() < 4){
+                            s7 = "0" + s7;
+                    }
+                }
+                return s7;
+            case "DS":
+                if(val <0 || val > 65535){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                return "0";
+            case "DS.B":
+                if(val <0 || val > 65535){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                return "0";
+            case "DS.W":
+                if(val <0 || val > 65535){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                return "0";
+            case "RMB":
+                if(val <0 || val > 65535){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }
+                return "0";
+            case "RMW":
+                if(val <0 || val > 65535){
+                    System.out.println("ERROR");
+                    System.out.println("OPERANDO NO VALIDO");
+                    System.out.println("LINEA " + Nlin);
+                    System.exit(0);
+                }   
+                return "0";
+        }
+        return "-1";
+    }
+    
     public boolean direc(String DIR, String ETQ, String OP, int val, int Nlin){
         automata au = new automata();
         switch(DIR){
             case "DW":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -141,7 +272,7 @@ public class Directivas {
             case "DB":
                 if(val <0 || val >255 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -150,7 +281,7 @@ public class Directivas {
             case "DC.W":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -159,7 +290,7 @@ public class Directivas {
             case "DC.B":
                 if(val <0 || val >255 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -168,7 +299,7 @@ public class Directivas {
             case "FCB":
                 if(val <0 || val >255 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -177,7 +308,7 @@ public class Directivas {
             case "FDB":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -189,7 +320,7 @@ public class Directivas {
             case "ORG":
                 if(val <0 || val >65535 ){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -200,7 +331,7 @@ public class Directivas {
             case "DS":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -209,7 +340,7 @@ public class Directivas {
             case "DS.B":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -218,7 +349,7 @@ public class Directivas {
             case "DS.W":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -227,7 +358,7 @@ public class Directivas {
             case "RMB":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -236,7 +367,7 @@ public class Directivas {
             case "RMW":
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
@@ -251,7 +382,7 @@ public class Directivas {
                 }
                 if(val <0 || val > 65535){
                     System.out.println("ERROR");
-                    System.out.println("OPERANDO DEMACIADO GRANDE");
+                    System.out.println("OPERANDO NO VALIDO");
                     System.out.println("LINEA " + Nlin);
                     System.exit(0);
                 }
