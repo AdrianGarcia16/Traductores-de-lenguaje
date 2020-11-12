@@ -21,6 +21,7 @@ public class Practica1 {
     public static boolean agrLinea = true;                                      //para no agregar las lineas con aomentarios
     public static String mod = "";
     public static String rel = "";
+    public static String Arc;
     public static void main(String[] args) {
         automata au = new automata();
         au.init("");
@@ -48,10 +49,17 @@ public class Practica1 {
         LeerTemp lt = new LeerTemp();
         //System.out.println("NOOO");
         lt.LeerX();
+        GenerarObj ob = new GenerarObj();
+        ob.createObj(Arc);
+        
+    }
+    public static String getAcrchivo(){
+        return Arc;
     }
     public static void Leer(){                                                  //metodo para leer el archivo
         try {
-            Scanner input = new Scanner(new File("P2ASM.txt"));                 //abrir archivo con la ruta especificada (la ruta es)
+            Arc = "AsmTemp.asm";
+            Scanner input = new Scanner(new File(Arc));                 //abrir archivo con la ruta especificada (la ruta es)
             int nLin = 1;
             while (input.hasNextLine()) {
                 String line = input.nextLine();                                 //guardar linea completa del documento                

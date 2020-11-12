@@ -36,6 +36,7 @@ public class LeerTemp {
                     switch(Pseg){
                         case 1:
                             tipo.add(st.nextToken());
+                            CodigoM.add("NULL");
                             break;
                         case 2:
                             valor.add(st.nextToken());
@@ -64,6 +65,16 @@ public class LeerTemp {
                 Iden(i);
             }
             else{
+                String aux1 = operando.get(i);
+                if(operando.get(i).contains("%")){
+                    aux1 = String.valueOf(Integer.parseInt(operando.get(i).replace("%", ""), 2));
+                }
+                else if(operando.get(i).contains("@")){
+                    aux1 = String.valueOf(Integer.parseInt(operando.get(i).replace("@", ""), 8));
+                }
+                else if(operando.get(i).contains("$")){
+                    aux1 = String.valueOf(Integer.parseInt(operando.get(i).replace("$", ""), 16));
+                }
                 if(CODOP.get(i).equals("FCC")){
                     String name="";
                     for(int i2 = 1;i2<operando.get(i).length()-1;i2++){
@@ -72,17 +83,20 @@ public class LeerTemp {
                     CodigoM.add(i, String.valueOf(name.toUpperCase()));
                 }
                 else if(CODOP.get(i).equals("ORG")){
-                    CodigoM.add("0");
+                    CodigoM.add("NULL");
                 }
                 else if(CODOP.get(i).equals("END")){
-                    CodigoM.add("0");
+                    CodigoM.add("NULL");
                 }
-                else if(!"-1".equals(d.direcVal(CODOP.get(i),Integer.parseInt(operando.get(i))))){
-                    CodigoM.add(i, d.direcVal(CODOP.get(i),Integer.parseInt(operando.get(i))).toUpperCase());
+                else if(CODOP.get(i).equals("DS") || CODOP.get(i).equals("DS.B") || CODOP.get(i).equals("DS.W") || CODOP.get(i).equals("RMB") || CODOP.get(i).equals("RME")){
+                    CodigoM.add("NULL");
+                }
+                else if(!"-1".equals(d.direcVal(CODOP.get(i),Integer.parseInt(aux1)))){
+                    CodigoM.add(i, d.direcVal(CODOP.get(i),Integer.parseInt(aux1)).toUpperCase());
                 }
             }
             if(CODOP.get(i).equals("END")){
-                CodigoM.add(i,"0");
+                CodigoM.add(i,"NULL");
             }
         }
         for(int i = 0;i<tipo.size();i++){
@@ -188,8 +202,11 @@ public class LeerTemp {
                                             CodigoM.add(p, s3);
                                             break;
                                         case "IDX":
+                                            System.out.println(operando.get(p));
                                             String[] E = operando.get(p).split(",");
-                                            
+                                            if(!operando.get(p).contains(",")){
+                                                break;
+                                            }
                                             aux = (String) stT.nextElement();
                                             if(E[1].contains("-") || E[1].contains("+")){
                                                 CodigoM.add(p, aux+PrePost(operando.get(p)).toUpperCase());
